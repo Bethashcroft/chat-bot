@@ -58,9 +58,7 @@ function App() {
   const [streamingText, setStreamingText] = useState("");
   const [displayedText, setDisplayedText] = useState("");
   const [isStreaming, setIsStreaming] = useState(false);
-  const [showWelcome, setshowWelcome] = useState(() => {
-    return !localStorage.getItem("welcome-dismissed");
-  });
+  const [showWelcome, setshowWelcome] = useState(false);
   const [showHistory, setShowHistory] = useState(false);
   const bottomRef = useRef<HTMLDivElement>(null);
 
@@ -292,6 +290,13 @@ function App() {
           >
             {darkMode ? "\u2600\uFE0F" : "\uD83C\uDF19"}
           </button>
+          <button
+            className="help-button"
+            onClick={() => setshowWelcome(true)}
+            title="Help"
+          >
+            ?
+          </button>
         </div>
       </header>
       <ChatHistory
@@ -314,14 +319,7 @@ function App() {
         Powered by Gemini 2.5 Flash Lite. AI can make mistakes - please
         fact-check responses.
       </div>
-      {showWelcome && (
-        <WelcomeModal
-          onClose={() => {
-            setshowWelcome(false);
-            localStorage.setItem("welcome-dismissed", "true");
-          }}
-        />
-      )}
+      {showWelcome && <WelcomeModal onClose={() => setshowWelcome(false)} />}
     </div>
   );
 }
